@@ -5,60 +5,21 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import banner1 from "../assets/banner-1.avif";
 import banner2 from "../assets/banner-2.avif";
 import banner3 from "../assets/banner-3.avif";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Home = () => {
-  const [games, setGames] = useState([]);
+  const games = useLoaderData();
 
   useEffect(() => {
-    const fakeGames = [
-      {
-        _id: "1",
-        title: "Elden Ring",
-        image: "https://i.ibb.co/7jBbwPk/elden-ring.jpg",
-        rating: 9.8,
-        genre: "Action RPG",
-      },
-      {
-        _id: "2",
-        title: "The Witcher 3",
-        image: "https://i.ibb.co/b31TRQs/witcher-3.jpg",
-        rating: 9.6,
-        genre: "RPG",
-      },
-      {
-        _id: "3",
-        title: "Red Dead Redemption 2",
-        image: "https://i.ibb.co/DKnLshj/red-dead.jpg",
-        rating: 9.7,
-        genre: "Adventure",
-      },
-      {
-        _id: "4",
-        title: "God of War",
-        image: "https://i.ibb.co/6BJz1vc/god-of-war.jpg",
-        rating: 9.5,
-        genre: "Action",
-      },
-      {
-        _id: "5",
-        title: "Hollow Knight",
-        image: "https://i.ibb.co/bL4ntcF/hollow-knight.jpg",
-        rating: 9.4,
-        genre: "Metroidvania",
-      },
-      {
-        _id: "6",
-        title: "Breath of the Wild",
-        image: "https://i.ibb.co/B3h6wDw/zelda.jpg",
-        rating: 9.6,
-        genre: "Open World",
-      },
-    ];
-    setGames(fakeGames);
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
   }, []);
 
   return (
@@ -109,30 +70,33 @@ const Home = () => {
           Highest Rated Games
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {games.map((game) => (
-            <div
-              key={game._id}
-              className="bg-white shadow-lg rounded-lg overflow-hidden"
-            >
-              <img
-                src={game.image}
-                alt={game.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{game.title}</h3>
-                <p className="text-gray-600">Genre: {game.genre}</p>
-                <p className="text-yellow-600 font-medium">
-                  Rating: {game.rating}
-                </p>
-                <Link to={`/game/${game._id}`}>
-                  <button className="btn btn-primary mt-3">
-                    Explore Details
-                  </button>
-                </Link>
+          {[...games]
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, 6)
+            .map((game) => (
+              <div
+                key={game._id}
+                className="bg-white shadow-lg rounded-lg overflow-hidden"
+              >
+                <img
+                  src={game.thumbnail}
+                  alt={game.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold">{game.title}</h3>
+                  <p className="text-gray-600">Genre: {game.genre}</p>
+                  <p className="text-yellow-600 font-medium">
+                    Rating: {game.rating}
+                  </p>
+                  <Link to={`/game/${game._id}`}>
+                    <button className="btn btn-primary mt-3">
+                      Explore Details
+                    </button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
@@ -154,15 +118,50 @@ const Home = () => {
       </section>
 
       {/* Extra Section 2: Why GameReviewHub? */}
-      <section className="bg-gray-100 p-8 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold mb-4 text-center">
+      <section
+        className="bg-gradient-to-r from-teal-600 to-slate-800 text-white p-10 rounded-2xl shadow-xl"
+        data-aos="fade-up"
+      >
+        <h2
+          className="text-4xl font-bold text-center mb-6"
+          data-aos="fade-down"
+          data-aos-delay="100"
+        >
           Why GameReviewHub?
         </h2>
-        <ul className="list-disc pl-5 text-gray-700 space-y-2">
-          <li>Unbiased user reviews and ratings</li>
-          <li>Track your watchlist and personal favorites</li>
-          <li>Explore by genre and popularity</li>
-          <li>Stay up-to-date with latest releases</li>
+        <ul className="list-none pl-0 max-w-2xl mx-auto space-y-5 text-lg">
+          <li
+            className="flex items-start gap-3"
+            data-aos="fade-right"
+            data-aos-delay="200"
+          >
+            <span className="text-green-300 text-xl">✅</span>
+            <span>Unbiased user reviews and ratings</span>
+          </li>
+          <li
+            className="flex items-start gap-3"
+            data-aos="fade-left"
+            data-aos-delay="300"
+          >
+            <span className="text-green-300 text-xl">✅</span>
+            <span>Track your watchlist and personal favorites</span>
+          </li>
+          <li
+            className="flex items-start gap-3"
+            data-aos="fade-right"
+            data-aos-delay="400"
+          >
+            <span className="text-green-300 text-xl">✅</span>
+            <span>Explore by genre and popularity</span>
+          </li>
+          <li
+            className="flex items-start gap-3"
+            data-aos="fade-left"
+            data-aos-delay="500"
+          >
+            <span className="text-green-300 text-xl">✅</span>
+            <span>Stay up-to-date with latest releases</span>
+          </li>
         </ul>
       </section>
     </div>
