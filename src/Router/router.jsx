@@ -4,6 +4,8 @@ import Home from "../Pages/Home";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import AddReview from "../Pages/AddReview";
+import ReviewDetails from "../Pages/ReviewDetails";
+import AllReviews from "../Pages/AllReviews";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +18,19 @@ const router = createBrowserRouter([
         loader: () => fetch("http://localhost:5000/game"),
       },
       {
+        path: "all-reviews",
+        element: <AllReviews></AllReviews>,
+        loader: () => fetch("http://localhost:5000/game"),
+      },
+      {
         path: "add-review",
         element: <AddReview></AddReview>,
+      },
+      {
+        path: "review/:id",
+        element: <ReviewDetails></ReviewDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/game/${params.id}`),
       },
       {
         path: "login",

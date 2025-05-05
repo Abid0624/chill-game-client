@@ -89,7 +89,7 @@ const Home = () => {
                   <p className="text-yellow-600 font-medium">
                     Rating: {game.rating}
                   </p>
-                  <Link to={`/game/${game._id}`}>
+                  <Link to={`/review/${game._id}`}>
                     <button className="btn btn-primary mt-3">
                       Explore Details
                     </button>
@@ -97,6 +97,14 @@ const Home = () => {
                 </div>
               </div>
             ))}
+        </div>
+        <div className="my-3">
+          <Link
+            to="all-reviews"
+            className="btn btn-accent my-3 mx-4 text-black"
+          >
+            Show More
+          </Link>
         </div>
       </section>
 
