@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   FiMenu,
   FiX,
@@ -12,12 +12,12 @@ import {
 import logo from "../assets/logo.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Temporarily no user (no auth yet)
-  const user = null;
+  const { user, logout } = useContext(AuthContext);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -78,14 +78,31 @@ const Navbar = () => {
           </div>
 
           {/* Right: Auth Buttons */}
-          <div className="flex items-center gap-2 mt-4 md:mt-0">
-            <Link to="/login">
-              <button className="btn btn-warning px-4 py-2">Login</button>
-            </Link>
-            <Link to="/register">
-              <button className="btn btn-accent px-4 py-2">Register</button>
-            </Link>
-          </div>
+          {user?.email ? (
+            <div className="flex items-center gap-4">
+              <img
+                src={user.photoURL || "/default-avatar.png"}
+                alt="User"
+                className="w-10 h-10 rounded-full border-2 border-white object-cover"
+              />
+              <div className="flex flex-col">
+                <span className="font-bold">{user.displayName || "User"}</span>
+                <span className="text-sm">{user.email}</span>
+              </div>
+              <button onClick={logout} className="btn btn-warning px-4 py-2">
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link to="/login">
+                <button className="btn btn-warning px-4 py-2">Login</button>
+              </Link>
+              <Link to="/register">
+                <button className="btn btn-accent px-4 py-2">Register</button>
+              </Link>
+            </div>
+          )}
 
           {/* Hamburger Toggle for Mobile */}
           <button

@@ -40,18 +40,44 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    googleLogin()
-      .then(() => {
-        Swal.fire("Success", "Logged in with Google", "success");
-        navigate("/");
+    googleLogin().then((result) => {
+      const user = result.user;
+      const userInfo = {
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        lastSignInTime: user.metadata.lastSignInTime,
+      };
+
+      // Try updating first
+      fetch("http://localhost:5000/users", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
       })
-      .catch((err) => {
-        Swal.fire("Error", err.message, "error");
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.modifiedCount === 0) {
+            // If user not found then insert it to the db
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            });
+          }
+        });
+
+      Swal.fire("Success", "Logged in with Google", "success");
+      navigate("/");
+    });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen mt-24 md:mt-0 flex items-center justify-center bg-base-200">
       <div className="card w-full max-w-md shadow-2xl bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
