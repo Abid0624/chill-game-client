@@ -1,10 +1,13 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProvider";
 
 const AddReview = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,8 +19,18 @@ const AddReview = () => {
     const rating = parseFloat(form.rating.value);
     const year = parseInt(form.year.value);
     const genre = form.genre.value;
-
-    const newGame = { thumbnail, title, description, rating, year, genre };
+    const email = user?.email;
+    const name = user?.displayName;
+    const newGame = {
+      thumbnail,
+      title,
+      description,
+      rating,
+      year,
+      genre,
+      email,
+      name,
+    };
 
     toast.success("Review submitted successfully!");
 
@@ -115,8 +128,8 @@ const AddReview = () => {
           <label className="block mb-1 font-semibold">User Email</label>
           <input
             type="email"
-            // value={user?.email || ""}
-            // readOnly
+            value={user?.email || ""}
+            readOnly
             className="w-full border p-2 rounded bg-gray-100"
           />
         </div>
@@ -125,8 +138,8 @@ const AddReview = () => {
           <label className="block mb-1 font-semibold">User Name</label>
           <input
             type="text"
-            // value={user?.displayName || ""}
-            // readOnly
+            value={user?.displayName || ""}
+            readOnly
             className="w-full border p-2 rounded bg-gray-100"
           />
         </div>

@@ -13,15 +13,18 @@ import logo from "../assets/logo.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { AuthContext } from "../providers/AuthProvider";
+import Loading from "../Components/Loading";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
   }, []);
+
+  if (loading) return <Loading></Loading>;
 
   return (
     <div>
