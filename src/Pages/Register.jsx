@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Register = () => {
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
@@ -42,6 +42,13 @@ const Register = () => {
       .then((result) => {
         updateUserProfile(name, photoURL)
           .then(() => {
+            const updatedUser = {
+              ...result.user,
+              displayName: name,
+              photoURL: photoURL,
+            };
+            setUser(updatedUser);
+
             Swal.fire("Success!", "User registered successfully", "success");
             navigate("/");
           })
@@ -50,7 +57,6 @@ const Register = () => {
           });
 
         const newUser = { name, email };
-        // save new user info to the database
         fetch("http://localhost:5000/users", {
           method: "POST",
           headers: {
@@ -60,7 +66,7 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("user created to db", data);
+            console.log("User saved to DB:", data);
           });
       })
       .catch((err) => {
@@ -74,7 +80,7 @@ const Register = () => {
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
-            <div className="form-control space-x-2">
+            <div className="form-control">
               <label className="label">Name</label>
               <input
                 type="text"
@@ -85,7 +91,7 @@ const Register = () => {
               />
             </div>
 
-            <div className="form-control space-x-2">
+            <div className="form-control">
               <label className="label">Email</label>
               <input
                 type="email"
@@ -96,7 +102,7 @@ const Register = () => {
               />
             </div>
 
-            <div className="form-control space-x-2">
+            <div className="form-control">
               <label className="label">Photo URL</label>
               <input
                 type="text"
@@ -107,7 +113,7 @@ const Register = () => {
               />
             </div>
 
-            <div className="form-control space-x-2">
+            <div className="form-control">
               <label className="label">Password</label>
               <input
                 type="password"
