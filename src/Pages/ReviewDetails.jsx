@@ -1,15 +1,14 @@
+import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProvider";
 
 const ReviewDetails = () => {
-  const review = useLoaderData(); // Loader already gives us the review data
+  const review = useLoaderData();
   console.log(review);
 
-  // Fake user (replace with actual user context when ready)
-  const user = {
-    email: "test@example.com",
-    displayName: "Demo User",
-  };
+  const { user } = useContext(AuthContext);
+  console.log(user.email, user.displayName);
 
   const handleAddToWatchlist = () => {
     if (!user) {
@@ -34,8 +33,12 @@ const ReviewDetails = () => {
       body: JSON.stringify(watchData),
     })
       .then((res) => res.json())
-      .then(() => {
-        Swal.fire("Added!", "This review is in your watchlist.", "success");
+      .then((data) => {
+        if (data.alreadyExists) {
+          Swal.fire("Already in Watchlist", "", "info");
+        } else {
+          Swal.fire("Added!", "This review is in your watchlist.", "success");
+        }
       });
   };
 
@@ -52,8 +55,8 @@ const ReviewDetails = () => {
         <p>Rating: {review.rating}/10</p>
         <p>Genre: {review.genre}</p>
         <p>Published: {review.year}</p>
-        <p>Reviewer: {review.userName}</p>
-        <p>Email: {review.userEmail}</p>
+        <p>Reviewer: {review.name}</p>
+        <p>Email: {review.email}</p>
       </div>
       <button onClick={handleAddToWatchlist} className="btn btn-primary mt-6">
         Add to WatchList
