@@ -75,12 +75,7 @@ const MyReviews = () => {
                 <td className="border border-gray-300 p-2">{review.genre}</td>
                 <td className="border border-gray-300 p-2 space-x-2">
                   <Link to={`/updateReview/${review._id}`}>
-                    <button
-                      // onClick={() => handleUpdate(review._id)}
-                      className="btn btn-sm btn-accent"
-                    >
-                      Update
-                    </button>
+                    <button className="btn btn-sm btn-accent">Update</button>
                   </Link>
                   <button
                     onClick={() => handleDelete(review._id)}
