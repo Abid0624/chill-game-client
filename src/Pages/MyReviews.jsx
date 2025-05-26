@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
 
@@ -17,6 +17,38 @@ const MyReviews = () => {
         .catch((err) => console.error("Error fetching reviews:", err));
     }
   }, [user]);
+
+  const handleDelete = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/game/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your review has been deleted.",
+                icon: "success",
+              });
+              const remaining = myReviews.filter((myRev) => myRev._id !== id);
+              setMyReviews(remaining);
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="max-w-6xl mx-auto mt-24 p-6 bg-white rounded shadow">
@@ -42,14 +74,16 @@ const MyReviews = () => {
                 <td className="border border-gray-300 p-2">{review.year}</td>
                 <td className="border border-gray-300 p-2">{review.genre}</td>
                 <td className="border border-gray-300 p-2 space-x-2">
+                  <Link to={`/updateReview/${review._id}`}>
+                    <button
+                      // onClick={() => handleUpdate(review._id)}
+                      className="btn btn-sm btn-accent"
+                    >
+                      Update
+                    </button>
+                  </Link>
                   <button
-                    // onClick={() => handleUpdate(review._id)}
-                    className="btn btn-sm btn-primary"
-                  >
-                    Update
-                  </button>
-                  <button
-                    // onClick={() => handleDelete(review._id)}
+                    onClick={() => handleDelete(review._id)}
                     className="btn btn-sm btn-error"
                   >
                     Delete
