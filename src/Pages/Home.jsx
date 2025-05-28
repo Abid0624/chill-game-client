@@ -15,6 +15,23 @@ import "aos/dist/aos.css";
 const Home = () => {
   const games = useLoaderData();
 
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const storedItem = localStorage.getItem("theme") || "light";
+    setTheme(storedItem);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // toggling functionality
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -23,8 +40,14 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="mt-20 px-4 space-y-12">
+    <div className="mt-20 px-4 space-y-12 bg-base-100 text-base-content min-h-screen transition-all duration-300">
       {/* Swiper Banner */}
+      <div className="text-right">
+        <button onClick={toggleTheme} className="btn my-2">
+          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+        </button>
+      </div>
+
       <section>
         <Swiper
           spaceBetween={30}
