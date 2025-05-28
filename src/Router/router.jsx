@@ -10,11 +10,13 @@ import PrivateRoute from "./PrivateRoute";
 import MyReviews from "../Pages/MyReviews";
 import UpdateReview from "../Components/UpdateReview";
 import MyWatchlist from "../Pages/MyWatchlist";
+import ErrorPage from "../Components/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
