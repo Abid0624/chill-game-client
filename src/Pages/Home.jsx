@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -11,26 +11,11 @@ import banner2 from "../assets/banner-2.avif";
 import banner3 from "../assets/banner-3.avif";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Home = () => {
   const games = useLoaderData();
-
-  const [theme, setTheme] = useState("light");
-
-  useEffect(() => {
-    const storedItem = localStorage.getItem("theme") || "light";
-    setTheme(storedItem);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  // toggling functionality
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  const { theme, toggleTheme } = useContext(AuthContext);
 
   useEffect(() => {
     AOS.init({
@@ -43,7 +28,7 @@ const Home = () => {
     <div className="mt-20 px-4 space-y-12 bg-base-100 text-base-content min-h-screen transition-all duration-300">
       {/* Swiper Banner */}
       <div className="text-right">
-        <button onClick={toggleTheme} className="btn my-2">
+        <button onClick={toggleTheme} className="btn mt-2">
           {theme === "light" ? "🌙 Dark" : "☀️ Light"}
         </button>
       </div>

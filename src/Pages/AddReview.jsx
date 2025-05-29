@@ -7,7 +7,7 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const AddReview = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, theme } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,6 +21,7 @@ const AddReview = () => {
     const genre = form.genre.value;
     const email = user?.email;
     const name = user?.displayName;
+
     const newGame = {
       thumbnail,
       title,
@@ -33,11 +34,8 @@ const AddReview = () => {
     };
 
     toast.success("Review submitted successfully!");
-
     form.reset();
-    // navigate("/");
 
-    // send data to server
     fetch("http://localhost:5000/game", {
       method: "POST",
       headers: {
@@ -47,22 +45,29 @@ const AddReview = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",
-            text: "User addedd successfully",
+            text: "User added successfully",
             icon: "success",
             confirmButtonText: "Cool",
           });
+          // navigate("/");
         }
       });
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-24 p-6 bg-green-100 shadow-lg rounded-lg">
+    <div
+      className={`max-w-3xl mx-auto mt-24 p-6 shadow-lg rounded-lg ${
+        theme === "dark"
+          ? "bg-gray-900 text-white"
+          : "bg-green-100 text-gray-800"
+      }`}
+    >
       <h2 className="text-3xl font-bold mb-6 text-center">Add New Review</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Thumbnail */}
         <div>
           <label className="block mb-1 font-semibold">
             Game Cover Image URL
@@ -70,35 +75,51 @@ const AddReview = () => {
           <input
             name="thumbnail"
             type="url"
-            className="w-full border p-2 rounded"
+            className={`w-full border p-2 rounded ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
             required
           />
         </div>
 
+        {/* Title */}
         <div>
           <label className="block mb-1 font-semibold">Game Title</label>
           <input
             name="title"
             type="text"
-            className="w-full border p-2 rounded"
+            className={`w-full border p-2 rounded ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
             required
           />
         </div>
 
+        {/* Description */}
         <div>
           <label className="block mb-1 font-semibold">Review Description</label>
           <textarea
             name="description"
-            className="w-full border p-2 rounded h-24"
+            className={`w-full border p-2 rounded h-24 ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
             required
           ></textarea>
         </div>
 
+        {/* Rating */}
         <div>
           <label className="block mb-1 font-semibold">Rating</label>
-          <input name="rating" className="w-full border p-2 rounded" required />
+          <input
+            name="rating"
+            className={`w-full border p-2 rounded ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
+            required
+          />
         </div>
 
+        {/* Year */}
         <div>
           <label className="block mb-1 font-semibold">Publishing Year</label>
           <input
@@ -106,44 +127,64 @@ const AddReview = () => {
             type="number"
             min="1980"
             max="2099"
-            className="w-full border p-2 rounded"
+            className={`w-full border p-2 rounded ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
             required
           />
         </div>
 
+        {/* Genre */}
         <div>
           <label className="block mb-1 font-semibold">Genre</label>
-          <select name="genre" className="w-full border p-2 rounded" required>
+          <select
+            name="genre"
+            className={`w-full border p-2 rounded ${
+              theme === "dark" ? "bg-gray-800 border-gray-700 text-white" : ""
+            }`}
+            required
+          >
             <option value="">-- Select Genre --</option>
             <option value="Action">Action</option>
             <option value="RPG">RPG</option>
             <option value="Adventure">Adventure</option>
             <option value="Shooter">Shooter</option>
-            <option value="Shooter">Roguelike</option>
+            <option value="Roguelike">Roguelike</option>
             <option value="Strategy">Strategy</option>
           </select>
         </div>
 
+        {/* Email */}
         <div>
           <label className="block mb-1 font-semibold">User Email</label>
           <input
             type="email"
             value={user?.email || ""}
             readOnly
-            className="w-full border p-2 rounded bg-gray-100"
+            className={`w-full border p-2 rounded ${
+              theme === "dark"
+                ? "bg-gray-700 border-gray-700 text-white"
+                : "bg-gray-100"
+            }`}
           />
         </div>
 
+        {/* Name */}
         <div>
           <label className="block mb-1 font-semibold">User Name</label>
           <input
             type="text"
             value={user?.displayName || ""}
             readOnly
-            className="w-full border p-2 rounded bg-gray-100"
+            className={`w-full border p-2 rounded ${
+              theme === "dark"
+                ? "bg-gray-700 border-gray-700 text-white"
+                : "bg-gray-100"
+            }`}
           />
         </div>
 
+        {/* Submit Button */}
         <button type="submit" className="btn btn-accent w-full">
           Submit Review
         </button>

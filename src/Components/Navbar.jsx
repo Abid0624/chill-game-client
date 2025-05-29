@@ -72,12 +72,6 @@ const Navbar = () => {
             >
               <FiStar className="mr-1" /> Watchlist
             </NavLink>
-            <NavLink
-              to="/about"
-              className="hover:text-gray-200 flex items-center my-1 md:my-0"
-            >
-              <FiInfo className="mr-1" /> About Dev
-            </NavLink>
           </div>
 
           {/* Right: Auth Buttons */}

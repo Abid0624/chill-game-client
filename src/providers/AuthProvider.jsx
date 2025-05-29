@@ -15,6 +15,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState("light");
 
   const googleProvider = new GoogleAuthProvider();
 
@@ -46,6 +47,23 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // theme changing functionality
+
+  useEffect(() => {
+    const storedItem = localStorage.getItem("theme") || "light";
+    setTheme(storedItem);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // toggling functionality
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -64,6 +82,8 @@ const AuthProvider = ({ children }) => {
     signInUser,
     googleLogin,
     logout,
+    theme,
+    toggleTheme,
   };
 
   return (

@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
+
 import Swal from "sweetalert2";
 import Loading from "../Components/Loading";
 
 const MyWatchlist = () => {
-  const { user, loading, setLoading } = useContext(AuthContext);
+  const { user, loading, setLoading, theme } = useContext(AuthContext);
+
   const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
@@ -44,34 +46,50 @@ const MyWatchlist = () => {
   };
 
   if (loading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   if (watchlist.length === 0) {
     return (
-      <div className="text-center mt-24 text-3xl font-bold">
+      <div
+        className={`text-center mt-24 text-3xl font-bold ${
+          theme === "dark" ? "text-white" : "text-gray-800"
+        }`}
+      >
         Your watchlist is empty.
       </div>
     );
   }
 
   return (
-    <div className="max-w-5xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
+    <div
+      className={`max-w-5xl mx-auto mt-24 p-6 shadow-md rounded-lg ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"
+      }`}
+    >
       <h2 className="text-3xl font-bold mb-6 text-center">My Watchlist</h2>
       <div className="overflow-x-auto space-y-2">
         <table className="table w-full">
           <thead>
-            <tr className="bg-gray-100 text-left">
+            <tr
+              className={`${
+                theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+              } text-left`}
+            >
               <th className="p-3">Image</th>
               <th className="p-3">Title</th>
               <th className="p-3">Genre</th>
-
               <th className="p-3">Action</th>
             </tr>
           </thead>
           <tbody>
             {watchlist.map((game) => (
-              <tr key={game._id} className="border-t">
+              <tr
+                key={game._id}
+                className={`border-t ${
+                  theme === "dark" ? "border-gray-700" : "border-gray-300"
+                }`}
+              >
                 <td className="p-3">
                   <img
                     src={game.thumbnail}
@@ -81,7 +99,6 @@ const MyWatchlist = () => {
                 </td>
                 <td className="p-3">{game.title}</td>
                 <td className="p-3">{game.genre}</td>
-
                 <td className="p-3">
                   <button
                     onClick={() => handleDelete(game._id)}
