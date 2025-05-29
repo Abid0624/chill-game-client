@@ -1,12 +1,54 @@
-# React + Vite
+# 🎮 Game Review Hub – Project Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Game Review Hub**, a full-stack web application where users can explore, review, and manage video games. This platform allows gamers to share their opinions, sort and filter games, manage their watchlists, and more. The project is built using **React** for the frontend and **Express + MongoDB** for the backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔗 Live Website
 
-## Expanding the ESLint configuration
+Check out the live version of the website here:  
+👉 [Game Review Hub Live](https://chill-game-687dd.web.app/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚛️ React Concepts Used
+
+This project leverages several core React concepts:
+
+- **Components**: Reusable UI components for modular design.
+- **State Management**: Managed with `useState`, `useEffect`, and `useReducer`.
+- **React Router**: For seamless client-side navigation between pages.
+- **Hooks**: Including `useEffect`, `useState`, and `useContext` for handling logic and side effects.
+- **Conditional Rendering**: For dynamic UI based on user actions or state.
+
+---
+
+## 🗃️ Data Handling and State Management
+
+- **Context API**: Used for managing global state like theme and authentication.
+- **Firebase Auth**: Handles user login, registration, and authentication state.
+- **MongoDB**: Stores game reviews, watchlists, and user data.
+- **Express Server**: RESTful API for handling backend operations such as CRUD.
+
+---
+
+## 🌟 Key Features
+
+Here are **5 major features** of the Game Review Hub:
+
+1. **User Authentication**: Secure sign-up, login, and logout features using Firebase.
+2. **Add & Manage Reviews**: Authenticated users can add, update, and delete their game reviews.
+3. **Sorting & Filtering**: Easily sort games by rating and year, or filter them by genre.
+4. **Watchlist Management**: Save games to a personal watchlist with the ability to view or remove them later.
+5. **Responsive UI & Theme Toggle**: Fully responsive design with dark/light mode support.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React, Tailwind CSS, React Router
+- **Backend**: Express.js, Node.js, MongoDB
+- **Authentication**: Firebase Auth
+- **Deployment**: Firebase Hosting (Frontend), Render/Railway (Backend API)
+
+---
