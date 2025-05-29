@@ -57,7 +57,7 @@ const Register = () => {
           });
 
         const newUser = { name, email };
-        fetch("http://localhost:5000/users", {
+        fetch("https://chill-game-server-zeta.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

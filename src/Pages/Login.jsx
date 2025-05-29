@@ -20,7 +20,7 @@ const Login = () => {
         // update last login time
         const lastSignInTime = result?.user?.metadata?.lastSignInTime;
         const loginInfo = { email, lastSignInTime };
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://chill-game-server-zeta.vercel.app/users`, {
           method: "PATCH",
           headers: {
             "content-type": "application/json",
@@ -50,7 +50,7 @@ const Login = () => {
       };
 
       // Try updating first
-      fetch("http://localhost:5000/users", {
+      fetch("https://chill-game-server-zeta.vercel.app/users", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const Login = () => {
         .then((data) => {
           if (data.modifiedCount === 0) {
             // If user not found then insert it to the db
-            fetch("http://localhost:5000/users", {
+            fetch("https://chill-game-server-zeta.vercel.app/users", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

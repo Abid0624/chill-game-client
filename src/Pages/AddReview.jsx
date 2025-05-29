@@ -36,7 +36,7 @@ const AddReview = () => {
     toast.success("Review submitted successfully!");
     form.reset();
 
-    fetch("http://localhost:5000/game", {
+    fetch("https://chill-game-server-zeta.vercel.app/game", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -12,7 +12,9 @@ const MyWatchlist = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/watchlist?email=${user.email}`)
+      fetch(
+        `https://chill-game-server-zeta.vercel.app/watchlist?email=${user.email}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setWatchlist(data);
@@ -32,7 +34,7 @@ const MyWatchlist = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/watchlist/${id}`, {
+        fetch(`https://chill-game-server-zeta.vercel.app/watchlist/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

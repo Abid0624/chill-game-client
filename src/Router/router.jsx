@@ -21,12 +21,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
-        loader: () => fetch("http://localhost:5000/game"),
+        loader: () => fetch("https://chill-game-server-zeta.vercel.app/game"),
       },
       {
         path: "all-reviews",
         element: <AllReviews></AllReviews>,
-        loader: () => fetch("http://localhost:5000/game"),
+        loader: () => fetch("https://chill-game-server-zeta.vercel.app/game"),
       },
       {
         path: "add-review",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         path: "updateReview/:id",
         element: <UpdateReview></UpdateReview>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/game/${params.id}`),
+          fetch(`https://chill-game-server-zeta.vercel.app/game/${params.id}`),
       },
       {
         path: "watchlist",
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
         path: "review/:id",
         element: <ReviewDetails></ReviewDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/game/${params.id}`),
+          fetch(`https://chill-game-server-zeta.vercel.app/game/${params.id}`),
       },
       {
         path: "login",
