@@ -7,7 +7,6 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 const MyWatchlist = () => {
   const { user, loading, setLoading, theme } = useContext(AuthContext);
-
   const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
@@ -54,15 +53,15 @@ const MyWatchlist = () => {
 
   if (watchlist.length === 0) {
     return (
-      <div className="flex flex-col items-center mt-24">
+      <div className="flex flex-col items-center justify-center min-h-[70vh]">
         <Player
           autoplay
           loop
           src={emptyWatchlistAnimation}
-          style={{ height: "300px", width: "300px" }}
+          className="w-48 h-48 md:w-64 md:h-64"
         />
         <div
-          className={`text-3xl font-bold mt-4 ${
+          className={`text-2xl md:text-3xl font-bold mt-4 ${
             theme === "dark" ? "text-white" : "text-gray-800"
           }`}
         >
@@ -74,13 +73,17 @@ const MyWatchlist = () => {
 
   return (
     <div
-      className={`max-w-5xl mx-auto mt-24 p-6 shadow-md rounded-lg ${
+      className={`max-w-5xl mx-auto mt-8 md:mt-24 p-4 md:p-6 shadow-md rounded-lg ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"
       }`}
     >
-      <h2 className="text-3xl font-bold mb-6 text-center">My Watchlist</h2>
-      <div className="overflow-x-auto space-y-2">
-        <table className="table w-full">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">
+        My Watchlist
+      </h2>
+
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full">
           <thead>
             <tr
               className={`${
@@ -113,7 +116,7 @@ const MyWatchlist = () => {
                 <td className="p-3">
                   <button
                     onClick={() => handleDelete(game._id)}
-                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition"
                   >
                     Remove
                   </button>
@@ -122,6 +125,38 @@ const MyWatchlist = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {watchlist.map((game) => (
+          <div
+            key={game._id}
+            className={`p-4 rounded-lg shadow ${
+              theme === "dark" ? "bg-gray-800" : "bg-gray-50"
+            }`}
+          >
+            <div className="flex items-start space-x-4">
+              <img
+                src={game.thumbnail}
+                alt={game.title}
+                className="w-16 h-16 object-cover rounded flex-shrink-0"
+              />
+              <div className="flex-1">
+                <h3 className="font-bold text-lg">{game.title}</h3>
+                <p className="text-sm text-gray-500">{game.genre}</p>
+              </div>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => handleDelete(game._id)}
+                className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 transition text-sm"
+              >
+                Remove from Watchlist
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
