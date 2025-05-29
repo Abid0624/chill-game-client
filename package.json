@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "@tailwindcss/vite": "^4.1.4",
     "aos": "^2.3.4",
     "firebase": "^11.6.1",
     "localforage": "^1.10.0",
+    "lottie-react": "^2.4.1",
     "match-sorter": "^8.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

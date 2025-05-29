@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
+import Lottie from "lottie-react";
+import noDataAnimation from "../assets/Animation - 1748511260033.json";
 
 const MyReviews = () => {
   const { user, theme } = useContext(AuthContext);
@@ -52,7 +54,14 @@ const MyReviews = () => {
     >
       <h2 className="text-3xl font-bold mb-6 text-center">My Reviews</h2>
       {myReviews.length === 0 ? (
-        <p className="text-center text-gray-500">No reviews found.</p>
+        <div className="flex flex-col items-center justify-center mt-10">
+          <Lottie
+            animationData={noDataAnimation}
+            loop={true}
+            style={{ width: 200, height: 200 }}
+          />
+          <p className="text-center text-gray-500 mt-4">No reviews found.</p>
+        </div>
       ) : (
         <table
           className={`table-auto w-full border-collapse ${

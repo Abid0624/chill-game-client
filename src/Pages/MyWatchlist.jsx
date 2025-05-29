@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-
+import emptyWatchlistAnimation from "../assets/Animation - 1748511260033.json";
 import Swal from "sweetalert2";
 import Loading from "../Components/Loading";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const MyWatchlist = () => {
   const { user, loading, setLoading, theme } = useContext(AuthContext);
@@ -51,12 +52,20 @@ const MyWatchlist = () => {
 
   if (watchlist.length === 0) {
     return (
-      <div
-        className={`text-center mt-24 text-3xl font-bold ${
-          theme === "dark" ? "text-white" : "text-gray-800"
-        }`}
-      >
-        Your watchlist is empty.
+      <div className="flex flex-col items-center mt-24">
+        <Player
+          autoplay
+          loop
+          src={emptyWatchlistAnimation}
+          style={{ height: "300px", width: "300px" }}
+        />
+        <div
+          className={`text-3xl font-bold mt-4 ${
+            theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
+        >
+          Your watchlist is empty.
+        </div>
       </div>
     );
   }
